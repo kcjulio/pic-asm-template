@@ -25,7 +25,7 @@
 
 ;===============================================================================
 ;____| Processor List |_________________________________________________________
-    list    P=16F628A
+    list	P=16F628A
 
 
 ;===============================================================================
@@ -47,11 +47,10 @@
 ;===============================================================================
 ;____| Global Variables |_______________________________________________________
     cblock  H'20'               ; General Purpose Registers (GPR) start address
-		
-		W_TEMP				    ; Temporary registers for context saving
-		STATUS_TEMP
+	W_TEMP			; Temporary registers for context saving
+	STATUS_TEMP
 
-		FLAGS1				    ; Flags 1 register
+	FLAGS1			; Flags 1 register
     endc
 
 
@@ -80,20 +79,20 @@ TEMPO_DELAY  equ  .500          ; EQU associates a number to a name
 
 ;===============================================================================
 ;____| Reset Vector|____________________________________________________________
-    org		H'0000'             ; Program start address
-    goto    main                ; Jumps to label 'main'
+    org	    	H'0000'		; Program start address
+    goto    	main		; Jumps to label 'main'
 
 
 ;===============================================================================
 ;____| Interrupt Vector |_______________________________________________________
 ; Context saving
-    org		H'0004'             ; Interrupt start address
+    org		H'0004'		; Interrupt start address
     
-    movwf   W_TEMP
+    movwf	W_TEMP
     swapf	STATUS,W
     movwf	STATUS_TEMP
 
-	; Interrupt service routine body
+; Interrupt service routine body
     nop
 
 ; Restore context
@@ -111,14 +110,14 @@ exit_ISR:
 routine:
     ; Routine body
 
-    return					    ; Return from routine
+    return			; Return from routine
 
 
 ;===============================================================================
 ;____| Program Start Point |____________________________________________________
 
 main:
-    bank1                       ; Switch to RAM bank 1
+    bank1			    ; Switch to RAM bank 1
     
     movwf	B'11111111'         ; Move H'FF' to Work (W)
     movwf	TRISA               ; Define all PORTA IOs as inputs
@@ -131,7 +130,7 @@ main:
     movlw	B'00000000'
     movwf	INTCON              ; Define interrupt options
     
-    bank0                       ; Return to bank 0
+    bank0			    ; Return to bank 0
     
     movlw	.7
     movwf	CMCON               ; Configure CMCON: 7 = comparators off
@@ -143,6 +142,7 @@ main:
 
 ;===============================================================================
 ;____| Loop Routine |___________________________________________________________
+
 loop:
     ; Loop body
 
